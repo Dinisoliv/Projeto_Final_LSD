@@ -1,0 +1,10 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.all;
+
+entity ReactTimeFSM is
+
+end ReactTimeFSM;
+
+architecture Behavioral of ReactTimeFSM is
+
+end ReactTimeFSM;
