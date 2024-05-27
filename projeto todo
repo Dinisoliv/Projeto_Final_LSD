@@ -1,0 +1,346 @@
+Para desenvolver o projeto descrito no documento, precisaremos criar vários módulos em VHDL que interagem para implementar o sistema de testes de tempo de reação.
+Abaixo, vou descrever e fornecer o código VHDL para os principais componentes necessários para o projeto:
+
+1.Controlador Principal (FSM)
+2.Gerador de Delay Aleatório
+3.Cronômetro
+4.Display de 7 Segmentos
+5.Top-Level Design
+
+
+Vamos começar pelo diagrama de estados (FSM) que controlará a lógica do projeto. Em seguida, desenvolveremos cada um dos módulos necessários.
+
+1. CONTROLADOR PRINCIPAL (FSM)
+O controlador principal gerencia os estados de configuração, teste e conclusão da competição. A FSM terá os seguintes estados:
+
+INIT: Estado inicial, aguarda o pressionamento de KEY0 para configurar o número de ciclos.
+CONFIG: Configuração do número de ciclos de teste.
+WAIT: Aguardando o atraso aleatório.
+TEST: Estado de teste, espera a reação dos jogadores.
+DISPLAY: Exibe os tempos médios e determina o vencedor.
+END: Exibe um efeito luminoso final e reinicia o sistema.
+
+CÒDIGO:
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity FSM_Controller is
+    Port ( clk : in STD_LOGIC;
+           reset : in STD_LOGIC;
+           key0 : in STD_LOGIC;
+           key3 : in STD_LOGIC;
+           start : out STD_LOGIC;
+           ledg : out STD_LOGIC_VECTOR (7 downto 0);
+           ledr : out STD_LOGIC_VECTOR (7 downto 0);
+           hex_display : out STD_LOGIC_VECTOR (6 downto 0));
+end FSM_Controller;
+
+architecture Behavioral of FSM_Controller is
+    type state_type is (INIT, CONFIG, WAIT, TEST, DISPLAY, END);
+    signal state, next_state : state_type;
+    signal cycle_count : integer range 0 to 15 := 0;
+    signal reaction_time_A, reaction_time_B : integer := 0;
+    signal avg_time_A, avg_time_B : integer := 0;
+
+    -- Declare other necessary signals here
+
+begin
+    process (clk, reset)
+    begin
+        if reset = '1' then
+            state <= INIT;
+        elsif rising_edge(clk) then
+            state <= next_state;
+        end if;
+    end process;
+
+    process (state, key0, key3, cycle_count)
+    begin
+        case state is
+            when INIT =>
+                if key0 = '0' then
+                    next_state <= CONFIG;
+                else
+                    next_state <= INIT;
+                end if;
+            when CONFIG =>
+                -- Set the number of cycles from switches
+                if key0 = '0' then
+                    cycle_count <= to_integer(unsigned(SW(3 downto 0)));
+                    next_state <= WAIT;
+                else
+                    next_state <= CONFIG;
+                end if;
+            when WAIT =>
+                -- Wait for random delay
+                next_state <= TEST;  -- Assuming delay is handled elsewhere
+            when TEST =>
+                if key3 = '0' then
+                    -- Player A pressed the button
+                    reaction_time_A <= reaction_time_A + 1;  -- Update with actual time
+                    next_state <= DISPLAY;
+                elsif key0 = '0' then
+                    -- Player B pressed the button
+                    reaction_time_B <= reaction_time_B + 1;  -- Update with actual time
+                    next_state <= DISPLAY;
+                else
+                    next_state <= TEST;
+                end if;
+            when DISPLAY =>
+                -- Update displays and check for end of cycles
+                if cycle_count = 0 then
+                    next_state <= END;
+                else
+                    cycle_count <= cycle_count - 1;
+                    next_state <= WAIT;
+                end if;
+            when END =>
+                -- Display winner and reset
+                next_state <= INIT;
+            when others =>
+                next_state <= INIT;
+        end case;
+    end process;
+
+    -- Output logic for LEDs and displays
+    process (state, avg_time_A, avg_time_B)
+    begin
+        case state is
+            when INIT =>
+                ledg <= (others => '0');
+                ledr <= (others => '0');
+            when CONFIG =>
+                -- Indicate configuration mode
+                hex_display <= "ConF";  -- This will need proper encoding
+            when WAIT =>
+                -- Random delay active
+                ledg <= (others => '1');
+            when TEST =>
+                -- Indicate testing mode
+                ledg <= "00001111";  -- Half for player A, half for player B
+            when DISPLAY =>
+                -- Show reaction times
+                hex_display <= std_logic_vector(to_unsigned(avg_time_A, 7));
+            when END =>
+                -- Flash winner or tie
+                ledg <= (others => '0');
+                ledr <= "11111111";
+            when others =>
+                ledg <= (others => '0');
+                ledr <= (others => '0');
+        end case;
+    end process;
+end Behavioral;
+
+
+
+
+
+2. GERADOR DE DELAY ALEATÓRIO
+Este módulo gera um atraso aleatório para evitar previsibilidade no teste de reação.
+
+CÓDIGO:
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity Random_Delay is
+    Port ( clk : in STD_LOGIC;
+           reset : in STD_LOGIC;
+           random_delay : out STD_LOGIC_VECTOR (31 downto 0));
+end Random_Delay;
+
+architecture Behavioral of Random_Delay is
+    signal counter : STD_LOGIC_VECTOR (31 downto 0) := (others => '0');
+begin
+    process (clk, reset)
+    begin
+        if reset = '1' then
+            counter <= (others => '0');
+        elsif rising_edge(clk) then
+            counter <= counter + 1;
+        end if;
+    end process;
+
+    random_delay <= counter; -- Use part of the counter as the random delay
+end Behavioral;
+
+
+
+
+
+3. CRONÔMETRO
+O cronômetro mede o tempo de reação dos jogadores.
+
+
+CÓDIGO:
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity Timer is
+    Port ( clk : in STD_LOGIC;
+           reset : in STD_LOGIC;
+           start : in STD_LOGIC;
+           stop : in STD_LOGIC;
+           time_out : out INTEGER);
+end Timer;
+
+architecture Behavioral of Timer is
+    signal count : INTEGER := 0;
+    signal running : BOOLEAN := FALSE;
+begin
+    process (clk, reset)
+    begin
+        if reset = '1' then
+            count <= 0;
+            running <= FALSE;
+        elsif rising_edge(clk) then
+            if start = '1' then
+                running <= TRUE;
+                count <= 0;
+            elsif stop = '1' then
+                running <= FALSE;
+            elsif running = TRUE then
+                count <= count + 1;
+            end if;
+        end if;
+    end process;
+
+    time_out <= count;
+end Behavioral;
+
+
+4. DISPLAY DE 7 SEGMENTOS
+Este módulo converte um número em um formato adequado para exibição em displays de 7 segmentos.
+
+
+CÓDIGO:
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity SevenSeg_Display is
+    Port ( num : in INTEGER;
+           seg : out STD_LOGIC_VECTOR (6 downto 0));
+end SevenSeg_Display;
+
+architecture Behavioral of SevenSeg_Display is
+begin
+    process (num)
+    begin
+        case num is
+            when 0 => seg <= "1000000"; -- 0
+            when 1 => seg <= "1111001"; -- 1
+            when 2 => seg <= "0100100"; -- 2
+            when 3 => seg <= "0110000"; -- 3
+            when 4 => seg <= "0011001"; -- 4
+            when 5 => seg <= "0010010"; -- 5
+            when 6 => seg <= "0000010"; -- 6
+            when 7 => seg <= "1111000"; -- 7
+            when 8 => seg <= "0000000"; -- 8
+            when 9 => seg <= "0010000"; -- 9
+            when others => seg <= "1111111"; -- off
+        end case;
+    end process;
+end Behavioral;
+
+
+
+5. TOP-LEVEL DESIGN
+Integrando todos os módulos acima no design de nível superior.
+
+
+
+CÓDIGO:
+
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity Reaction_Time_Test is
+    Port ( clk : in STD_LOGIC;
+           reset : in STD_LOGIC;
+           key0 : in STD_LOGIC;
+           key3 : in STD_LOGIC;
+           SW : in STD_LOGIC_VECTOR (3 downto 0);
+           LEDG : out STD_LOGIC_VECTOR (7 downto 0);
+           LEDR : out STD_LOGIC_VECTOR (7 downto 0);
+           HEX0 : out STD_LOGIC_VECTOR (6 downto 0);
+           HEX1 : out STD_LOGIC_VECTOR (6 downto 0);
+           HEX2 : out STD_LOGIC_VECTOR (6 downto 0);
+           HEX3 : out STD_LOGIC_VECTOR (6 downto 0);
+           HEX4 : out STD_LOGIC_VECTOR (6 downto 0);
+           HEX5 : out STD_LOGIC_VECTOR (6 downto 0);
+           HEX6 : out STD_LOGIC_VECTOR (6 downto 0);
+           HEX7 : out STD_LOGIC_VECTOR (6 downto 0));
+end Reaction_Time_Test;
+
+architecture Behavioral of Reaction_Time_Test is
+    signal start, clk_50MHz : STD_LOGIC;
+    signal random_delay : STD_LOGIC_VECTOR (31 downto 0);
+    signal time_A, time_B : INTEGER;
+    signal seg_A, seg_B : STD_LOGIC_VECTOR (6 downto 0);
+
+    component FSM_Controller
+        Port ( clk : in STD_LOGIC;
+               reset : in STD_LOGIC;
+               key0 : in STD_LOGIC;
+               key3 : in STD_LOGIC;
+               start : out STD_LOGIC;
+               ledg : out STD_LOGIC_VECTOR (7 downto 0);
+               ledr : out STD_LOGIC_VECTOR (7 downto 0);
+               hex_display : out STD_LOGIC_VECTOR (6 downto 0));
+    end component;
+
+    component Random_Delay
+        Port ( clk : in STD_LOGIC;
+               reset : in STD_LOGIC;
+               random_delay : out STD_LOGIC_VECTOR (31 downto 0));
+    end component;
+
+    component Timer
+        Port ( clk : in STD_LOGIC;
+               reset : in STD_LOGIC;
+               start : in STD_LOGIC;
+               stop : in STD_LOGIC;
+               time_out : out INTEGER);
+    end component;
+
+    component SevenSeg_Display
+        Port ( num : in INTEGER;
+               seg : out STD_LOGIC_VECTOR (6 downto 0));
+    end component;
+
+begin
+    U1: FSM_Controller port map (clk, reset, key0, key3, start, LEDG, LEDR, HEX0);
+    U2: Random_Delay port map (clk, reset, random_delay);
+    U3: Timer port map (clk, reset, start, key3, time_A);
+    U4: Timer port map (clk, reset, start, key0, time_B);
+    U5: SevenSeg_Display port map (time_A, seg_A);
+    U6: SevenSeg_Display port map (time_B, seg_B);
+
+    HEX4 <= seg_A;
+    HEX5 <= seg_B;
+
+    -- Map other displays and logic as needed
+end Behavioral;
+
+
+
+
+Essa é uma visão geral e um ponto de partida para o projeto. A integração final pode requerer ajustes adicionais, especialmente na forma de temporizações e interface com hardware específico.
+Além disso, você precisará adicionar lógica para tratar de casos especiais, como desqualificação por reação prematura, cálculo de médias e efeitos luminosos.
