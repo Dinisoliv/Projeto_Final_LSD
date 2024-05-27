@@ -7,11 +7,11 @@ entity ReactTimeFSM is
 		  Nrounds : in std_logic_vector(3 downto 0);
 		  playerA : in std_logic;
 		  playerB : in std_logic;
-		  )
+		  );
 end ReactTimeFSM;
 
 architecture Behavioral of ReactTimeFSM is
-	type state is (INIT, CONF, PREP, STIM, REACT, CONCLSN);
+	type state is (INIT, CONF, PREP, STIM, REACT, DESQ, CONCLSN);
 	signal PS, NS : state;
 	signal s_Nrounds : std_logic_vector(3 downto 0);
 	signal s_plyrAReady, s_plyrBReady : std_logic;
@@ -27,7 +27,7 @@ begin
 		end if;
 	end process;
 	
-	comb_proc: process(PS)
+	ns_proc: process(PS)
 	begin
 		case PS is
 			when INIT =>
@@ -57,10 +57,35 @@ begin
 			
 			when REACT =>
 			
+			when DESQ =>
+			
 			when CONCLSN =>
 			
 			when others =>
 				NS <= INIT;
 		end case;
 	end process;
+	
+	process(PS)
+	begin
+    case PS is
+        when INIT =>
+            
+        when CONF =>
+            
+        when PREP =>
+            
+        when STIM =>
+            
+        when REACT =>
+            
+        when DESQ =>
+            
+        when CONCLSN =>
+            
+        when others =>
+            
+    end case;
+end process;
+
 end ReactTimeFSM;
