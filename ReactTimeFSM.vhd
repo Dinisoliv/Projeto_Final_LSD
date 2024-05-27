@@ -14,6 +14,7 @@ architecture Behavioral of ReactTimeFSM is
 	type state is (INIT, CONF, PREP, STIM, REACT, CONCLSN);
 	signal PS, NS : state;
 	signal s_Nrounds : std_logic_vector(3 downto 0);
+	signal s_plyrAReady, s_plyrBReady : std_logic;
 begin
 	sync_proc: process(clk)
 	begin
@@ -31,6 +32,7 @@ begin
 		case PS is
 			when INIT =>
 				NS <= CONF;
+				
 			when Conf =>
 				if Nrounds = "0000" then
 					s_Nrounds <= "1000";
@@ -40,13 +42,22 @@ begin
 				if playerB = '1' then
 					NS <= PREP;
 				end if;
+				
 			when PREP =>
-			
+				if playerA = '1' then
+					s_plyrAReady <= '1';
+				end if;
+				if playerB = '1' then 
+					s_plyrBReady <= '1';
+				end if;
+				if (s_plyrAReady and s_plyrBReady) = '1' then
+					NS <= STIM;
+				end if;
 			when STIM =>
 			
 			when REACT =>
 			
-			when REACT =>
+			when CONCLSN =>
 			
 			when others =>
 				NS <= INIT;
