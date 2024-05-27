@@ -11,7 +11,7 @@ entity ReactTimeFSM is
 end ReactTimeFSM;
 
 architecture Behavioral of ReactTimeFSM is
-	type state is (INIT, CONF, PREP)
+	type state is (INIT, CONF, PREP, STIM, REACT, CONCLSN);
 	signal PS, NS : state;
 	signal s_Nrounds : std_logic_vector(3 downto 0);
 begin
@@ -42,9 +42,11 @@ begin
 				end if;
 			when PREP =>
 			
-			when =>
+			when STIM =>
 			
-			when =>
+			when REACT =>
+			
+			when REACT =>
 			
 			when others =>
 				NS <= INIT;
