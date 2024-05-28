@@ -6,8 +6,7 @@ entity FreeRun is
 	port(clk   : in std_logic;
 		  reset : in std_logic;
 		  start : in std_logic;
-		  don   : out std_logic_vector(11 downto 0);
-		  counter : out std_logic_vector(11 downto 0)); --eliminar o counter dps
+		  don   : out std_logic_vector(11 downto 0));
 end FreeRun;
 
 architecture Behavioral of FreeRun is
@@ -33,5 +32,4 @@ begin
 	end process;
 	
 	don <= random_value;
-	counter <= std_logic_vector(free_run_counter);
 end Behavioral;

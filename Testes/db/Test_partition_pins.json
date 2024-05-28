@@ -4,79 +4,63 @@
 			"name" : "Top",
 			"pins" : [
 				{
-					"name" : "LEDG[7]",
+					"name" : "don[0]",
 					"strict" : false
 				},
 				{
-					"name" : "LEDG[6]",
+					"name" : "don[1]",
 					"strict" : false
 				},
 				{
-					"name" : "LEDG[5]",
+					"name" : "don[2]",
 					"strict" : false
 				},
 				{
-					"name" : "LEDG[4]",
+					"name" : "don[3]",
 					"strict" : false
 				},
 				{
-					"name" : "LEDG[3]",
+					"name" : "don[4]",
 					"strict" : false
 				},
 				{
-					"name" : "LEDG[2]",
+					"name" : "don[5]",
 					"strict" : false
 				},
 				{
-					"name" : "LEDG[1]",
+					"name" : "don[6]",
 					"strict" : false
 				},
 				{
-					"name" : "LEDG[0]",
+					"name" : "don[7]",
 					"strict" : false
 				},
 				{
-					"name" : "LEDR[7]",
+					"name" : "don[8]",
 					"strict" : false
 				},
 				{
-					"name" : "LEDR[6]",
+					"name" : "don[9]",
 					"strict" : false
 				},
 				{
-					"name" : "LEDR[5]",
+					"name" : "don[10]",
 					"strict" : false
 				},
 				{
-					"name" : "LEDR[4]",
+					"name" : "don[11]",
 					"strict" : false
 				},
 				{
-					"name" : "LEDR[3]",
+					"name" : "start",
 					"strict" : false
 				},
 				{
-					"name" : "LEDR[2]",
+					"name" : "reset",
 					"strict" : false
 				},
 				{
-					"name" : "LEDR[1]",
-					"strict" : false
-				},
-				{
-					"name" : "LEDR[0]",
-					"strict" : false
-				},
-				{
-					"name" : "SW[1]",
-					"strict" : false
-				},
-				{
-					"name" : "SW[0]",
-					"strict" : false
-				},
-				{
-					"name" : "CLOCK_50",
+					"name" : "clk",
 					"strict" : false
 				}
 			]

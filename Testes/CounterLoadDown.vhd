@@ -7,7 +7,6 @@ entity CounterLoadDown is
         load   : in std_logic;
         down   : in std_logic;
         dataIn : in std_logic_vector(11 downto 0);
-        count  : out std_logic_vector(11 downto 0);
         zero   : out std_logic);
 end CounterLoadDown;
 
@@ -25,6 +24,5 @@ begin
         end if;
     end process;
 
-    count <= std_logic_vector(s_count);
     zero <= '1' when s_count = 0 else '0';  
 end Behavioral;

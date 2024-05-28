@@ -1,13 +1,13 @@
-Analysis & Synthesis Status : Successful - Tue May 28 14:06:14 2024
+Analysis & Synthesis Status : Successful - Tue May 28 18:44:55 2024
 Quartus Prime Version : 22.1std.2 Build 922 07/20/2023 SC Lite Edition
 Revision Name : Test
-Top-level Entity Name : Test
+Top-level Entity Name : FreeRun
 Family : Cyclone IV E
-Total logic elements : 78
-    Total combinational functions : 74
-    Dedicated logic registers : 46
-Total registers : 46
-Total pins : 19
+Total logic elements : 40
+    Total combinational functions : 34
+    Dedicated logic registers : 24
+Total registers : 24
+Total pins : 15
 Total virtual pins : 0
 Total memory bits : 0
 Embedded Multiplier 9-bit elements : 0

@@ -1,5 +1,5 @@
 Analysis & Synthesis report for Test
-Tue May 28 14:06:14 2024
+Tue May 28 18:44:56 2024
 Quartus Prime Version 22.1std.2 Build 922 07/20/2023 SC Lite Edition
 
 
@@ -15,10 +15,9 @@ Quartus Prime Version 22.1std.2 Build 922 07/20/2023 SC Lite Edition
   7. Analysis & Synthesis Resource Utilization by Entity
   8. General Register Statistics
   9. Inverted Register Statistics
- 10. Parameter Settings for User Entity Instance: ClkDivider:inst
- 11. Post-Synthesis Netlist Statistics for Top Partition
- 12. Elapsed Time Per Partition
- 13. Analysis & Synthesis Messages
+ 10. Post-Synthesis Netlist Statistics for Top Partition
+ 11. Elapsed Time Per Partition
+ 12. Analysis & Synthesis Messages
 
 
 
@@ -45,16 +44,16 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                        ;
 +------------------------------------+------------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Tue May 28 14:06:14 2024          ;
+; Analysis & Synthesis Status        ; Successful - Tue May 28 18:44:55 2024          ;
 ; Quartus Prime Version              ; 22.1std.2 Build 922 07/20/2023 SC Lite Edition ;
 ; Revision Name                      ; Test                                           ;
-; Top-level Entity Name              ; Test                                           ;
+; Top-level Entity Name              ; FreeRun                                        ;
 ; Family                             ; Cyclone IV E                                   ;
-; Total logic elements               ; 78                                             ;
-;     Total combinational functions  ; 74                                             ;
-;     Dedicated logic registers      ; 46                                             ;
-; Total registers                    ; 46                                             ;
-; Total pins                         ; 19                                             ;
+; Total logic elements               ; 40                                             ;
+;     Total combinational functions  ; 34                                             ;
+;     Dedicated logic registers      ; 24                                             ;
+; Total registers                    ; 24                                             ;
+; Total pins                         ; 15                                             ;
 ; Total virtual pins                 ; 0                                              ;
 ; Total memory bits                  ; 0                                              ;
 ; Embedded Multiplier 9-bit elements ; 0                                              ;
@@ -68,7 +67,7 @@ https://fpgasoftware.intel.com/eula.
 ; Option                                                           ; Setting            ; Default Value      ;
 +------------------------------------------------------------------+--------------------+--------------------+
 ; Device                                                           ; EP4CE115F29C7      ;                    ;
-; Top-level entity name                                            ; Test               ; Test               ;
+; Top-level entity name                                            ; FreeRun            ; Test               ;
 ; Family name                                                      ; Cyclone IV E       ; Cyclone V          ;
 ; Use smart compilation                                            ; Off                ; Off                ;
 ; Enable parallel Assembler and Timing Analyzer during compilation ; On                 ; On                 ;
@@ -165,58 +164,54 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------+-------------+
 
 
-+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Source Files Read                                                                                                                                      ;
-+----------------------------------+-----------------+------------------------------------+-------------------------------------------------------------------------+---------+
-; File Name with User-Entered Path ; Used in Netlist ; File Type                          ; File Name with Absolute Path                                            ; Library ;
-+----------------------------------+-----------------+------------------------------------+-------------------------------------------------------------------------+---------+
-; FreeRun.vhd                      ; yes             ; User VHDL File                     ; C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/FreeRun.vhd     ;         ;
-; ClkDividerN.vhd                  ; yes             ; User VHDL File                     ; C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/ClkDividerN.vhd ;         ;
-; Test.bdf                         ; yes             ; User Block Diagram/Schematic File  ; C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/Test.bdf        ;         ;
-+----------------------------------+-----------------+------------------------------------+-------------------------------------------------------------------------+---------+
++------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                               ;
++----------------------------------+-----------------+-----------------+---------------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type       ; File Name with Absolute Path                                        ; Library ;
++----------------------------------+-----------------+-----------------+---------------------------------------------------------------------+---------+
+; FreeRun.vhd                      ; yes             ; User VHDL File  ; C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/FreeRun.vhd ;         ;
++----------------------------------+-----------------+-----------------+---------------------------------------------------------------------+---------+
 
 
-+--------------------------------------------------------------+
-; Analysis & Synthesis Resource Usage Summary                  ;
-+---------------------------------------------+----------------+
-; Resource                                    ; Usage          ;
-+---------------------------------------------+----------------+
-; Estimated Total logic elements              ; 78             ;
-;                                             ;                ;
-; Total combinational functions               ; 74             ;
-; Logic element usage by number of LUT inputs ;                ;
-;     -- 4 input functions                    ; 14             ;
-;     -- 3 input functions                    ; 7              ;
-;     -- <=2 input functions                  ; 53             ;
-;                                             ;                ;
-; Logic elements by mode                      ;                ;
-;     -- normal mode                          ; 39             ;
-;     -- arithmetic mode                      ; 35             ;
-;                                             ;                ;
-; Total registers                             ; 46             ;
-;     -- Dedicated logic registers            ; 46             ;
-;     -- I/O registers                        ; 0              ;
-;                                             ;                ;
-; I/O pins                                    ; 19             ;
-;                                             ;                ;
-; Embedded Multiplier 9-bit elements          ; 0              ;
-;                                             ;                ;
-; Maximum fan-out node                        ; CLOCK_50~input ;
-; Maximum fan-out                             ; 26             ;
-; Total fan-out                               ; 329            ;
-; Average fan-out                             ; 2.08           ;
-+---------------------------------------------+----------------+
++-----------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary               ;
++---------------------------------------------+-------------+
+; Resource                                    ; Usage       ;
++---------------------------------------------+-------------+
+; Estimated Total logic elements              ; 40          ;
+;                                             ;             ;
+; Total combinational functions               ; 34          ;
+; Logic element usage by number of LUT inputs ;             ;
+;     -- 4 input functions                    ; 4           ;
+;     -- 3 input functions                    ; 0           ;
+;     -- <=2 input functions                  ; 30          ;
+;                                             ;             ;
+; Logic elements by mode                      ;             ;
+;     -- normal mode                          ; 23          ;
+;     -- arithmetic mode                      ; 11          ;
+;                                             ;             ;
+; Total registers                             ; 24          ;
+;     -- Dedicated logic registers            ; 24          ;
+;     -- I/O registers                        ; 0           ;
+;                                             ;             ;
+; I/O pins                                    ; 15          ;
+;                                             ;             ;
+; Embedded Multiplier 9-bit elements          ; 0           ;
+;                                             ;             ;
+; Maximum fan-out node                        ; process_0~0 ;
+; Maximum fan-out                             ; 12          ;
+; Total fan-out                               ; 144         ;
+; Average fan-out                             ; 1.64        ;
++---------------------------------------------+-------------+
 
 
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                        ;
-+----------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+-----------------------+-------------+--------------+
-; Compilation Hierarchy Node ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name   ; Entity Name ; Library Name ;
-+----------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+-----------------------+-------------+--------------+
-; |Test                      ; 74 (0)              ; 46 (0)                    ; 0           ; 0            ; 0       ; 0         ; 19   ; 0            ; |Test                 ; Test        ; work         ;
-;    |ClkDivider:inst|       ; 42 (42)             ; 26 (26)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Test|ClkDivider:inst ; ClkDivider  ; work         ;
-;    |FreeRun:inst2|         ; 32 (32)             ; 20 (20)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Test|FreeRun:inst2   ; FreeRun     ; work         ;
-+----------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+-----------------------+-------------+--------------+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                      ;
++----------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+---------------------+-------------+--------------+
+; Compilation Hierarchy Node ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name ; Entity Name ; Library Name ;
++----------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+---------------------+-------------+--------------+
+; |FreeRun                   ; 34 (34)             ; 24 (24)                   ; 0           ; 0            ; 0       ; 0         ; 15   ; 0            ; |FreeRun            ; FreeRun     ; work         ;
++----------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+---------------------+-------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
 
@@ -225,8 +220,8 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 46    ;
-; Number of registers using Synchronous Clear  ; 25    ;
+; Total registers                              ; 24    ;
+; Number of registers using Synchronous Clear  ; 0     ;
 ; Number of registers using Synchronous Load   ; 0     ;
 ; Number of registers using Asynchronous Clear ; 0     ;
 ; Number of registers using Asynchronous Load  ; 0     ;
@@ -240,24 +235,14 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------------------------------------+---------+
 ; Inverted Register                      ; Fan out ;
 +----------------------------------------+---------+
-; FreeRun:inst2|free_run_counter[7]      ; 4       ;
-; FreeRun:inst2|free_run_counter[6]      ; 4       ;
-; FreeRun:inst2|free_run_counter[5]      ; 4       ;
-; FreeRun:inst2|free_run_counter[3]      ; 4       ;
-; FreeRun:inst2|free_run_counter[8]      ; 2       ;
-; FreeRun:inst2|free_run_counter[9]      ; 2       ;
+; free_run_counter[3]                    ; 3       ;
+; free_run_counter[5]                    ; 3       ;
+; free_run_counter[6]                    ; 3       ;
+; free_run_counter[7]                    ; 3       ;
+; free_run_counter[8]                    ; 3       ;
+; free_run_counter[9]                    ; 3       ;
 ; Total number of inverted registers = 6 ;         ;
 +----------------------------------------+---------+
-
-
-+--------------------------------------------------------------+
-; Parameter Settings for User Entity Instance: ClkDivider:inst ;
-+----------------+----------+----------------------------------+
-; Parameter Name ; Value    ; Type                             ;
-+----------------+----------+----------------------------------+
-; divfactor      ; 25000000 ; Signed Integer                   ;
-+----------------+----------+----------------------------------+
-Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
 +-----------------------------------------------------+
@@ -265,21 +250,19 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; boundary_port         ; 19                          ;
-; cycloneiii_ff         ; 46                          ;
-;     SCLR              ; 25                          ;
-;     plain             ; 21                          ;
-; cycloneiii_lcell_comb ; 78                          ;
-;     arith             ; 35                          ;
-;         2 data inputs ; 35                          ;
-;     normal            ; 43                          ;
-;         1 data inputs ; 10                          ;
+; boundary_port         ; 15                          ;
+; cycloneiii_ff         ; 24                          ;
+;     plain             ; 24                          ;
+; cycloneiii_lcell_comb ; 34                          ;
+;     arith             ; 11                          ;
+;         2 data inputs ; 11                          ;
+;     normal            ; 23                          ;
+;         1 data inputs ; 7                           ;
 ;         2 data inputs ; 12                          ;
-;         3 data inputs ; 7                           ;
-;         4 data inputs ; 14                          ;
+;         4 data inputs ; 4                           ;
 ;                       ;                             ;
-; Max LUT depth         ; 4.00                        ;
-; Average LUT depth     ; 2.84                        ;
+; Max LUT depth         ; 3.10                        ;
+; Average LUT depth     ; 2.18                        ;
 +-----------------------+-----------------------------+
 
 
@@ -298,18 +281,16 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 22.1std.2 Build 922 07/20/2023 SC Lite Edition
-    Info: Processing started: Tue May 28 14:06:03 2024
+    Info: Processing started: Tue May 28 18:44:44 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off Test -c Test
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 10 of the 10 processors detected
 Info (12021): Found 2 design units, including 1 entities, in source file freerun.vhd
-    Info (12022): Found design unit 1: FreeRun-Behavioral File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/FreeRun.vhd Line: 13
+    Info (12022): Found design unit 1: FreeRun-Behavioral File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/FreeRun.vhd Line: 12
     Info (12023): Found entity 1: FreeRun File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/FreeRun.vhd Line: 5
 Info (12021): Found 2 design units, including 1 entities, in source file clkdividern.vhd
     Info (12022): Found design unit 1: ClkDivider-Behavioral File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/ClkDividerN.vhd Line: 11
     Info (12023): Found entity 1: ClkDivider File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/ClkDividerN.vhd Line: 5
-Info (12021): Found 1 design units, including 1 entities, in source file test.bdf
-    Info (12023): Found entity 1: Test
 Info (12021): Found 2 design units, including 1 entities, in source file roundcount.vhd
     Info (12022): Found design unit 1: RoundCount-Behavioral File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/RoundCount.vhd Line: 12
     Info (12023): Found entity 1: RoundCount File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/RoundCount.vhd Line: 5
@@ -317,7 +298,7 @@ Info (12021): Found 2 design units, including 1 entities, in source file nrounds
     Info (12022): Found design unit 1: NRounds-Behavioral File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/NRounds.vhd Line: 11
     Info (12023): Found entity 1: NRounds File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/NRounds.vhd Line: 4
 Info (12021): Found 2 design units, including 1 entities, in source file counterloaddown.vhd
-    Info (12022): Found design unit 1: CounterLoadDown-Behavioral File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/CounterLoadDown.vhd Line: 14
+    Info (12022): Found design unit 1: CounterLoadDown-Behavioral File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/CounterLoadDown.vhd Line: 13
     Info (12023): Found entity 1: CounterLoadDown File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/CounterLoadDown.vhd Line: 5
 Info (12021): Found 2 design units, including 1 entities, in source file accn.vhd
     Info (12022): Found design unit 1: AccN-Behavioral File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/AccN.vhd Line: 15
@@ -326,22 +307,20 @@ Info (12021): Found 2 design units, including 1 entities, in source file counter
     Info (12022): Found design unit 1: CounterUp-Behavioral File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/CounterUp.vhd Line: 13
     Info (12023): Found entity 1: CounterUp File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/CounterUp.vhd Line: 5
 Info (12021): Found 2 design units, including 1 entities, in source file timern.vhd
-    Info (12022): Found design unit 1: TimerN-Behavioral File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/TimerN.vhd Line: 16
-    Info (12023): Found entity 1: TimerN File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/TimerN.vhd Line: 7
-Info (12127): Elaborating entity "Test" for the top level hierarchy
-Info (12128): Elaborating entity "FreeRun" for hierarchy "FreeRun:inst2"
-Info (12128): Elaborating entity "ClkDivider" for hierarchy "ClkDivider:inst"
+    Info (12022): Found design unit 1: TimerN-Behavioral File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/TimerN.vhd Line: 14
+    Info (12023): Found entity 1: TimerN File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Testes/TimerN.vhd Line: 5
+Info (12127): Elaborating entity "FreeRun" for the top level hierarchy
 Info (286030): Timing-Driven Synthesis is running
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 97 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 55 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 3 input pins
-    Info (21059): Implemented 16 output pins
-    Info (21061): Implemented 78 logic cells
+    Info (21059): Implemented 12 output pins
+    Info (21061): Implemented 40 logic cells
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 4869 megabytes
-    Info: Processing ended: Tue May 28 14:06:14 2024
-    Info: Elapsed time: 00:00:11
-    Info: Total CPU time (on all processors): 00:00:12
+    Info: Peak virtual memory: 4878 megabytes
+    Info: Processing ended: Tue May 28 18:44:56 2024
+    Info: Elapsed time: 00:00:12
+    Info: Total CPU time (on all processors): 00:00:13
 
 
