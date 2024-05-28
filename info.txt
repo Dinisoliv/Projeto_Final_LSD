@@ -1,0 +1,6 @@
+Componentes necesários - feito
+
+Por fazer:
+Máquina de Estados(MEF)
+Top Level
+1 kHz - clk?
