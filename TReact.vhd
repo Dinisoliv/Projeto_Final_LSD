@@ -2,15 +2,15 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 use IEEE.NUMERIC_STD.all;
 
-entity CounterUp is
+entity TReact is
     port(clk    : in std_logic;
         reset  : in std_logic;
         up     : in std_logic;
 		  stop   : in std_logic;
         count  : out std_logic_vector(11 downto 0));
-end CounterUp;
+end TReact;
 
-architecture Behavioral of CounterUp is
+architecture Behavioral of TReact is
     signal s_count : unsigned(11 downto 0);
 begin
     process(clk)

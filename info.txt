@@ -3,4 +3,14 @@ Componentes necesários - feito
 Por fazer:
 Máquina de Estados(MEF)
 Top Level
+
+Duvidas:
 1 kHz - clk?
+Strings 7 seg
+lista sensibilidade e sincrono c/ clk o 2o processo 
+process for random counter?
+onde instaciar componentes- dentro fora de estados e ou processos
+Debounce dos botoes
+
+ext:
+mostrar up counter
