@@ -13,7 +13,7 @@ begin
 	process(clk)
 	begin
 		if rising_edge(clk) then
-			if (free_run_counter = "111110100000") then
+			if (free_run_counter >= "111110100000") then
             free_run_counter <= "001111101000";
         else
             free_run_counter <= unsigned(free_run_counter) + 1;

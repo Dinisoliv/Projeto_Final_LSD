@@ -2,25 +2,40 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 
 entity ReactTimeFSM is
-	port(clk     : in std_logic;
-		  reset   : in std_logic;
-		  Nrounds : in std_logic_vector(3 downto 0);
-		  playerA : in std_logic;
-		  playerB : in std_logic;
+	port(clk             : in std_logic;
+		  reset           : in std_logic;
+		  NRoundsInput    : in std_logic_vector(3 downto 0);
+		  NRounds         : in std_logic_vector(3 downto 0);
+		  PresentRounds   : in std_logic_vector(3 downto 0);
+		  playerA         : in std_logic;
+		  playerADeb      : in std_logic;
+		  playerB         : in std_logic;
+		  playerBDeb      : in std_logic;
+		  stimulus        : in std_logic;
+		  TotalTReact     : in std_logic_vector(N downto 0);
+		  timerScoreOut   : in std_logic;
+		  timerConclsnOut : in std_logic;
+		  
+		  
+		  NroundsSave       : out std_logic;
+		  enableNRounds     : out std_logic;
+		  loadRandom        : out std_logic;
+		  delayCounter      : out std_logic;
+		  TReactStart       : out std_logic;
+		  Enable_SumTReactA : out std_logic;
+		  Enable_SumTReactB : out std_logic;
+		  CountRound        : out std_logic;
+		  timerScoreStart   : out std_logic;
+		  averageTReact     : out std_logic_vector(13 downto 0);
+		  timerConclsnStart : out std_logic;
 		  );
 end ReactTimeFSM;
 
 architecture Behavioral of ReactTimeFSM is
-	type state is (CONF, PREP, DELAY, STIM, REACT, SCORES, CONCLSN);
+	type state is (CONF, PREP, READY_A, READY_B, DELAY, STIM, REACT_A, REACT_B, INTER, SCORES, DESQA, DESQB, CONCLSN);
 	signal PS, NS : state;
 	
-	signal s_Nrounds : std_logic_vector(3 downto 0);
-	signal s_plyrAReady, s_plyrBReady : std_logic;
-	signal s_FreeRun : std_logic_vector(11 downto 0);
-	signal s_loadRandom, s_Stimulus : std_logic;
-	signal s_winnerA : std_logic;
-	signal s_ResetTReactA, s_startTReactA, s_stopTReactA, s_TreactA : std_logic;
-	signal s_ResetTReactB, s_startTReactB, s_stopTReactB, s_TreactB: std_logic;
+	signal s_winnerA, s_tie : std_logic;
 
 	
 begin
@@ -35,101 +50,157 @@ begin
 		end if;
 	end process;
 	
-	ns_proc: process(PS)
+	ns_out_proc: process(PS)
 	begin
 		case PS is
 			when CONF =>
-				if playerB = '1' then
+				enableNRounds => '1';
+				NroundsSave <= NRoundsInput;
+				if playerBDeb = '1' then
+					enableNRounds => '0';
 					NS <= PREP;
 				end if;
 				
 			when PREP =>
-				if (s_plyrAReady = '1') and (s_plyrBReady = '1') then
-					NS <= STIM;
+				if (playerADeb = '1') then
+					NS <= READY_A;
+				elsif (playerBDeb = '1') then
+					NS <= READY_B;
 				end if;
+				
+			when READY_A =>
+				if (playerBDeb = '1') then
+					loadRandom <= '1';
+					NS <= DELAY;
+				end if;
+					
+			when READY_B =>
+				if (playerADeb = '1') then
+					loadRandom <= '1';
+					NS <= DELAY;
+				end if;
+				
 			when DELAY =>
-				if s_Stimulus = '1' then
+				loadRandom <= '0';
+				delayCounter <= '1';
+				if stimulus = '1' then
 					NS <= STIM;
-				end if; --cond
-				if (s_plyrAReady = '1') or (s_plyrBReady = '1') then
+					delayCounter <= '0';
+				end if;
+				
+				if (playerA = '1') then
+					NS <= DESQA;
+				elsif ((playerB = '1') then
+					NS <= DESQB;
+				end if;
+				
+			when DESQA =>
+				if (playerB = '1') then
+					NS <= CONF;
+					delayCounter <= '0';
+				end if;
+				if stimulus = '1' then
+					delayCounter <= '0';
+					s_winnerA <= '0';
+					s_tie <= '0';
+					NS <= CONCLSN;
+					end if;
+				
+			when DESQB =>
+				if (playerA = '1') then
+					NS <= CONF;
+					delayCounter <= '0';
+				end if;
+				
+				if stimulus = '1' then
+					delayCounter <= '0';
+					s_winnerA <= '1';
+					s_tie <= '0';
 					NS <= CONCLSN;
 				end if;
+				
 			when STIM =>
+				TReactStartA <= '1';
+				TReactStartB <= '1';
+
+				if (playerA = '1') and (playerB = '1') then
+					TReactStartA <= '0';
+					Enable_SumTReactA <= '1';
+					TReactStartB <= '0';
+					Enable_SumTReactB <= '1';
+					NS <= INTER;					
+
+				elsif (playerA = '1') then
+					TReactStartA <= '0';
+					Enable_SumTReactA <= '1';
+					NS <= REACT_A;
+				
+				elsif (playerB = '1') then
+					TReactStartB <= '0';
+					Enable_SumTReactB <= '1';
+					NS <= REACT_B;
+				end if;
 			
-			when REACT =>
+			when REACT_A =>
+				if (playerB = '1') then
+					TReactStartB <= '0';
+					Enable_SumTReactB <= '1';
+					NS <= INTER;
+				end if;
 			
+			when REACT_B =>
+				if (playerA = '1') then			
+					TReactStartA <= '0';
+					Enable_SumTReactA <= '1';
+					NS <= INTER;
+				end if;
+				
+			when INTER =>
+				CountRound <= '1';
+				timerScoreStart <= '1';
+				NS <= SCORES;
+				
 			when SCORES =>
-			
+				countRound <= '0';
+				averageTReactA <= TotalTReactA / PresentRounds;
+				averageTReactB	<= TotalTReactB / PresentRounds;
+				
+				--atualização dos 7 segs c/ aveg
+				
+				if timerScoreOut = '1' then
+					if PresentRounds = NRounds then
+						if averageTReactA > averageTReactB
+							s_winnerA <= '1';
+							s_tie     <= '0';
+						elsif averageTReactA < averageTReactB
+							s_winnerA <= '0';
+							s_tie     <= '0';
+						else
+							s_tie     <= '1';
+						end if;
+						NS <= CONCLSN;
+					else
+						NS <= CONF;
+					end if;
+				
 			when CONCLSN =>
+				timerConclsnStart <= '1';
+				--efeito luminoso pelos 5 segundos
+				if timerConclsnOut <= '1' then
+					NS <= CONF;
+				end if;
 			
 			when others =>
-				NS <= INIT;
+				NS <= CONF;
 		end case;
 	end process;
 	
-	comb_proc: process(PS)
+	out_proc: process(PS)
 	begin
-    case PS is            
-		when CONF =>
-			if Nrounds = "0000" then
-				s_Nrounds <= "1000";
-			else
-				s_Nrounds <= Nrounds;
-			end if;
-
-		when PREP =>
-			if playerA = '1' then
-				s_plyrAReady <= '1';
-			end if;
-			if playerB = '1' then 
-				s_plyrBReady <= '1';
-			end if;
-			if (s_plyrAReady = '1') and (s_plyrBReady = '1') then
-				s_loadRandom <= '1';
-          end if;
-		when DELAY =>
-			s_loadRandom <= '0';
-			s_delay <= '1';
-			
-		when STIM =>
-			s_startTReactA <= '1'; 
-			s_startTReactB <= '1';
-		when REACT =>
-			
-		when SCORES =>
-			
-		when CONCLSN =>
-            
-      when others =>
-            
-    end case;
-end process;
-
-	random_counter: entity work.FreeRun(Behavioral)
-		port map(clk => clk,
-					don => s_FreeRun);
+		 case PS is            
 					
-	random_downCounter : entity work.RandomDownCounter(Behavioral)
-		port map(clk    => clk,
-					load   => s_loadRandom,
-					down   => s_delay,
-					dataIn => s_FreeRun,
-					zero   => s_Stimulus);
+			when others =>
 					
-	TReact_A: entity work.TReact(Behavioral)
-		port map(clk   => clk,
-					reset => s_ResetTReactA,
-					up    => s_startTReactA,
-					stop  => s_stopTReactA,
-					count => s_TreactA);
-					
-	TReact_B: entity work.TReact(Behavioral)
-	port map(clk   => clk,
-				reset => s_ResetTReactB,
-				up    => s_startTReactB,
-				stop  => s_stopTReactB,
-				count => s_TreactB);
-					
-	
-
+		end case;
+	end process;
 end ReactTimeFSM;

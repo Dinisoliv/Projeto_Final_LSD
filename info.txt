@@ -1,16 +1,25 @@
 Componentes necesários - feito
 
 Por fazer:
-Máquina de Estados(MEF)
-Top Level
+FSM (saidas dos displays e LEDS)
+Top Level - todo
 
 Duvidas:
-1 kHz - clk?
 Strings 7 seg
-lista sensibilidade e sincrono c/ clk o 2o processo 
-process for random counter?
-onde instaciar componentes- dentro fora de estados e ou processos
-Debounce dos botoes
 
 ext:
-mostrar up counter
+NRound decimal in CONF
+--mostrar up counter - TReact
+ronda atual LEDR - blink
+Tempo de reacao da ronda
+winner ronda
+CONF - efeitos
+
+Mostrar displays/Leds:
+averageTReact
+NRound Presente
+Verdes (apagar lateral (pronto) - acender lateral (DESQ) - todo (estimulo)
+
+Se possivel:
+Separar processos FSM - saidas e next State
+Sparated file for instaciacao
