@@ -28,19 +28,21 @@ begin
 		 decOut_n =>       );
 	  
   ClkDivider : entity work.ClkN(Behavorial)
-     generic(N =>      );
+     generic map(divFactor =>      );
      port map(clkIn =>       ,
 	      clkOut =>        );
 
   Debouncer : entity work.DebN(Behavorial)
-     generic(kHzClkFreq : positive := 50000;
-           mSecMinInWidth : positive := 100;
-           inPolarity : std_logic := '0';
-           outPolarity : std_logic := '1');
-     port map(refClk : in std_logic;
-        dirtyIn : in std_logic;
-        pulsedOut : out std_logic);
-	
+     generic map(kHzClkFreq =>      );
+                 mSecMinInWidth =>        ,
+                 inPolarity =>        ,
+                 outPolarity =>      );
+     port map(refClk =>       ,
+              dirtyIn =>       ,
+              pulsedOut =>      );
+
+  FreeRun : entity work.FreeN(Behavorial)
+      
 	   
   
 
