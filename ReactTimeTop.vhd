@@ -42,6 +42,10 @@ begin
               pulsedOut =>      );
 
   FreeRun : entity work.FreeN(Behavorial)
+      port map(clk =>       ,
+	       don =>      );
+
+  NRounds : entity work.NRoundsN(Behavorial)
       
 	   
   
