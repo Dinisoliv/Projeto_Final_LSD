@@ -71,3 +71,5 @@ set_global_assignment -name VHDL_FILE RoundCount.vhd
 set_global_assignment -name VHDL_FILE AccN.vhd
 set_global_assignment -name VHDL_FILE Bin7SegDecoder.vhd
 set_global_assignment -name VHDL_FILE blink_gen.vhd
+set_global_assignment -name VHDL_FILE Bin2BCD.vhd
+set_global_assignment -name VHDL_FILE TimerN.vhd
