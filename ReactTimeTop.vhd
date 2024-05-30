@@ -52,7 +52,11 @@ begin
 	       roundOut =>        );
 
   RandomDownCounter : entity work.RanddomN(Behavorial)
-      port map(
+      port map(clk =>       ,
+               load =>      ,
+               down =>      ,
+               dataIn =>      ,
+               zero =>);
 	   
   
 
