@@ -33,7 +33,13 @@ begin
 	      clkOut =>        );
 
   Debouncer : entity work.DebN(Behavorial)
-     
+     generic(kHzClkFreq : positive := 50000;
+           mSecMinInWidth : positive := 100;
+           inPolarity : std_logic := '0';
+           outPolarity : std_logic := '1');
+     port map(refClk : in std_logic;
+        dirtyIn : in std_logic;
+        pulsedOut : out std_logic);
 	
 	   
   
