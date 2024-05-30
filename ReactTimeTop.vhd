@@ -26,8 +26,15 @@ begin
      port map(enable =>      ,
 		 binInput =>      ,
 		 decOut_n =>       );
+	  
   ClkDivider : entity work.ClkN(Behavorial)
-     port map(
+     generic(N =>      );
+     port map(clkIn =>       ,
+	      clkOut =>        );
+
+  Debouncer : entity work.DebN(Behavorial)
+     
+	
 	   
   
 
