@@ -9,12 +9,13 @@ architecture Shell of ReactTimeTop is
 begin
   AccN : entity work.AccN(Behavorial)
     generic map(N =>        );
-	  port map(clk =>    ,
-		       enable =>     ,
-		       reset =>      ,
-		       dataIn =>      ,
-		       ovf =>      ,
-		       dataOut =>      );
+    port map(clk =>    ,
+		enable =>     ,
+		reset =>      ,
+		dataIn =>      ,
+		ovf =>      ,
+		dataOut =>      );
+   
   
 
 end Shell;
