@@ -3,7 +3,8 @@ use IEEE.STD_LOGIC_1164.all;
 use IEEE.NUMERIC_STD.all;
 
 entity Bin2BCD is
-	port(dataIn      : in std_logic_vector(15 downto 0); -- Changed to 8 bits
+	port(dataIn_r    : in std_logic_vector(7 downto 0); -- Changed to 8 bits
+		  dataIn_m    : in std_logic_vector(7 downto 0); -- Changed to 8 bits
 		  unitsOut    : out std_logic_vector(3 downto 0);
 		  tenthsOut   : out std_logic_vector(3 downto 0);
 		  hundredsOut : out std_logic_vector(3 downto 0);
@@ -20,7 +21,7 @@ architecture Behavioral of Bin2BCD is
 	signal s_thousandsOut: unsigned(3 downto 0); -- Added signal for thousands
 
 begin
-	s_dataIn      <= unsigned(dataIn);
+	s_dataIn      <= unsigned(dataIn_m) & unsigned(dataIn_r);
 	s_unitsOut    <= s_dataIn mod 10;
 	s_hundTen     <= s_dataIn / 10;
 	s_tenthsOut   <= s_hundTen mod 10;
