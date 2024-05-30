@@ -15,7 +15,16 @@ begin
 		dataIn =>      ,
 		ovf =>      ,
 		dataOut =>      );
-   
+
+  Bin2BCD : entity work.Bin2N(Behavorial) 
+     port map(dataIn =>       , -- Changed to 8 bits
+		  tenthsOut =>    ,
+		  hundredsOut =>      ,
+		  thousandsOut =>      );
+	  
+  Bin7SegDecoder : entity work.Bin7N(Behavorial)
+     port map(
+	   
   
 
 end Shell;
