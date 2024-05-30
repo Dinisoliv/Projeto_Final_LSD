@@ -3,13 +3,13 @@ Componentes necesários - feito
 Por fazer:
 FSM (saidas dos displays e LEDS)
 Top Level - todo
+Inverter logica do Timer
 
 Duvidas:
 Strings 7 seg
 
 ext:
 NRound decimal in CONF
---mostrar up counter - TReact
 ronda atual LEDR - blink
 Tempo de reacao da ronda
 winner ronda
@@ -19,6 +19,7 @@ Mostrar displays/Leds:
 averageTReact
 NRound Presente
 Verdes (apagar lateral (pronto) - acender lateral (DESQ) - todo (estimulo)
+Vermelho (Rondas restantes)
 
 Se possivel:
 Separar processos FSM - saidas e next State
