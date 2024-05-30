@@ -46,7 +46,13 @@ begin
 	       don =>      );
 
   NRounds : entity work.NRoundsN(Behavorial)
-      
+      port map(clk =>    ,
+	       enable =>       ,
+	       roundIn =>        ,
+	       roundOut =>        );
+
+  RandomDownCounter : entity work.RanddomN(Behavorial)
+      port map(
 	   
   
 
