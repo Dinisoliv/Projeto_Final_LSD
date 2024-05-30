@@ -23,6 +23,10 @@ begin
 		  thousandsOut =>      );
 	  
   Bin7SegDecoder : entity work.Bin7N(Behavorial)
+     port map(enable =>      ,
+		 binInput =>      ,
+		 decOut_n =>       );
+  ClkDivider : entity work.ClkN(Behavorial)
      port map(
 	   
   
