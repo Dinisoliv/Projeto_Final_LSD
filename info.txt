@@ -1,12 +1,13 @@
-Componentes necesários - feito
+Duvidas:
+Listas sensibilidade
+Test? doesnt count to avgtime(1st round)?
+s_winner and s_tie
+if, elsif , else
+blink - 2 ... relogio - freq
 
 Por fazer:
 FSM (saidas dos displays e LEDS)
 Top Level - todo
-Inverter logica do Timer
-
-Duvidas:
-Strings 7 seg
 
 ext:
 NRound decimal in CONF

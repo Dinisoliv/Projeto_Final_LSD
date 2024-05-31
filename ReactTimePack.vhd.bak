@@ -1,0 +1,18 @@
+package ReactTimePack is
+ 
+  constant DISP_VAL : std_logic_vector(3 downto 0) := "0000";
+  constant DISP_C   : std_logic_vector(3 downto 0) := "0001";
+  constant DISP_O   : std_logic_vector(3 downto 0) := "0001";
+  constant DISP_N   : std_logic_vector(3 downto 0) := "0001";
+  constant DISP_F   : std_logic_vector(3 downto 0) := "0001";
+  constant DISP_T   : std_logic_vector(3 downto 0) := "0001";
+  constant DISP_E   : std_logic_vector(3 downto 0) := "0001";
+  constant DISP_S   : std_logic_vector(3 downto 0) := "0001";
+  constant DISP_H   : std_logic_vector(3 downto 0) := "0001";
+   
+end package ReactTimePack;
+ 
+
+package body ReactTimePack is
+end package body ReactTimePack;
+

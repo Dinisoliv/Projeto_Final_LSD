@@ -1,5 +1,5 @@
 Analysis & Synthesis report for ReactTime
-Thu May 30 20:07:08 2024
+Fri May 31 15:46:05 2024
 Quartus Prime Version 22.1std.2 Build 922 07/20/2023 SC Lite Edition
 
 
@@ -37,7 +37,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                        ;
 +------------------------------------+------------------------------------------------+
-; Analysis & Synthesis Status        ; Failed - Thu May 30 20:07:08 2024              ;
+; Analysis & Synthesis Status        ; Failed - Fri May 31 15:46:05 2024              ;
 ; Quartus Prime Version              ; 22.1std.2 Build 922 07/20/2023 SC Lite Edition ;
 ; Revision Name                      ; ReactTime                                      ;
 ; Top-level Entity Name              ; ReactTimeFSM                                   ;
@@ -162,13 +162,15 @@ https://fpgasoftware.intel.com/eula.
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 22.1std.2 Build 922 07/20/2023 SC Lite Edition
-    Info: Processing started: Thu May 30 20:06:58 2024
+    Info: Processing started: Fri May 31 15:45:53 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off ReactTime -c ReactTime
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 10 of the 10 processors detected
-Info (12021): Found 2 design units, including 1 entities, in source file reacttimefsm.vhd
-    Info (12022): Found design unit 1: ReactTimeFSM-Behavioral File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/ReactTimeFSM.vhd Line: 45
-    Info (12023): Found entity 1: ReactTimeFSM File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/ReactTimeFSM.vhd Line: 5
+Error (10500): VHDL syntax error at ReactTimeFSM.vhd(6) near text ".";  expecting an identifier, or a string literal File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/ReactTimeFSM.vhd Line: 6
+Error (10500): VHDL syntax error at ReactTimeFSM.vhd(52) near text ")";  expecting an identifier, or "constant", or "file", or "signal", or "variable" File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/ReactTimeFSM.vhd Line: 52
+Error (10500): VHDL syntax error at ReactTimeFSM.vhd(56) near text ")";  expecting ":", or "," File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/ReactTimeFSM.vhd Line: 56
+Error (10500): VHDL syntax error at ReactTimeFSM.vhd(63) near text "begin";  expecting an identifier ("begin" is a reserved keyword), or "constant", or "file", or "signal", or "variable" File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/ReactTimeFSM.vhd Line: 63
+Info (12021): Found 0 design units, including 0 entities, in source file reacttimefsm.vhd
 Info (12021): Found 2 design units, including 1 entities, in source file debouncer.vhd
     Info (12022): Found design unit 1: Debouncer-Behavioral File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Debouncer.vhd Line: 15
     Info (12023): Found entity 1: Debouncer File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Debouncer.vhd Line: 5
@@ -184,14 +186,43 @@ Info (12021): Found 2 design units, including 1 entities, in source file treact.
 Info (12021): Found 2 design units, including 1 entities, in source file nrounds.vhd
     Info (12022): Found design unit 1: NRounds-Behavioral File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/NRounds.vhd Line: 11
     Info (12023): Found entity 1: NRounds File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/NRounds.vhd Line: 4
-Info (12021): Found 2 design units, including 1 entities, in source file reacttimetop.vhd
-    Info (12022): Found design unit 1: ReactTimeTop-Shell File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/ReactTimeTop.vhd Line: 8
-    Info (12023): Found entity 1: ReactTimeTop File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/ReactTimeTop.vhd Line: 4
-Error (10309): VHDL Interface Declaration error in ReactTimeFSM.vhd(226): interface object "averageTReactB" of mode out cannot be read. Change object mode to buffer. File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/ReactTimeFSM.vhd Line: 226
-Error: Quartus Prime Analysis & Synthesis was unsuccessful. 1 error, 1 warning
+Error (10500): VHDL syntax error at ReactTimeTop.vhd(6) near text "downto";  expecting "(", or an identifier ("downto" is a reserved keyword), or  unary operator File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/ReactTimeTop.vhd Line: 6
+Error (10500): VHDL syntax error at ReactTimeTop.vhd(7) near text "downto";  expecting "(", or an identifier ("downto" is a reserved keyword), or  unary operator File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/ReactTimeTop.vhd Line: 7
+Error (10523): Ignored construct ReactTimeTop at ReactTimeTop.vhd(4) due to previous errors File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/ReactTimeTop.vhd Line: 4
+Info (12021): Found 0 design units, including 0 entities, in source file reacttimetop.vhd
+Info (12021): Found 2 design units, including 1 entities, in source file clkdivider.vhd
+    Info (12022): Found design unit 1: ClkDivider-Behavioral File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/ClkDivider.vhd Line: 11
+    Info (12023): Found entity 1: ClkDivider File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/ClkDivider.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file roundcount.vhd
+    Info (12022): Found design unit 1: RoundCount-Behavioral File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/RoundCount.vhd Line: 12
+    Info (12023): Found entity 1: RoundCount File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/RoundCount.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file accn.vhd
+    Info (12022): Found design unit 1: AccN-Behavioral File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/AccN.vhd Line: 15
+    Info (12023): Found entity 1: AccN File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/AccN.vhd Line: 5
+Error (10500): VHDL syntax error at Bin7SegDecoder.vhd(5) near text ".";  expecting an identifier, or a string literal File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Bin7SegDecoder.vhd Line: 5
+Error (10523): Ignored construct Bin7SegDecoder at Bin7SegDecoder.vhd(7) due to previous errors File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Bin7SegDecoder.vhd Line: 7
+Info (12021): Found 0 design units, including 0 entities, in source file bin7segdecoder.vhd
+Info (12021): Found 2 design units, including 1 entities, in source file blink_gen.vhd
+    Info (12022): Found design unit 1: blink_gen-Behavioral File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/blink_gen.vhd Line: 12
+    Info (12023): Found entity 1: blink_gen File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/blink_gen.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file bin2bcd.vhd
+    Info (12022): Found design unit 1: Bin2BCD-Behavioral File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Bin2BCD.vhd Line: 13
+    Info (12023): Found entity 1: Bin2BCD File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Bin2BCD.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file timern.vhd
+    Info (12022): Found design unit 1: TimerN-Behavioral File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/TimerN.vhd Line: 14
+    Info (12023): Found entity 1: TimerN File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/TimerN.vhd Line: 5
+Error (10500): VHDL syntax error at Bin7SegDecoderExt.vhd(5) near text ".";  expecting an identifier, or a string literal File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Bin7SegDecoderExt.vhd Line: 5
+Error (10523): Ignored construct Bin7SegDecoderExt at Bin7SegDecoderExt.vhd(7) due to previous errors File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Bin7SegDecoderExt.vhd Line: 7
+Error (10500): VHDL syntax error at Bin7SegDecoderExt.vhd(70) near text "process";  expecting "if" File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Bin7SegDecoderExt.vhd Line: 70
+Error (10500): VHDL syntax error at Bin7SegDecoderExt.vhd(72) near text "when";  expecting ";" File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/Bin7SegDecoderExt.vhd Line: 72
+Info (12021): Found 0 design units, including 0 entities, in source file bin7segdecoderext.vhd
+Info (12021): Found 2 design units, including 0 entities, in source file reacttimepack.vhd
+    Info (12022): Found design unit 1: ReactTimePack File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/ReactTimePack.vhd Line: 4
+    Info (12022): Found design unit 2: ReactTimePack-body File: C:/Users/dinis/Desktop/LSD/Projeto/Projeto_Final/ReactTimePack.vhd Line: 18
+Error: Quartus Prime Analysis & Synthesis was unsuccessful. 13 errors, 1 warning
     Error: Peak virtual memory: 4797 megabytes
-    Error: Processing ended: Thu May 30 20:07:08 2024
-    Error: Elapsed time: 00:00:10
-    Error: Total CPU time (on all processors): 00:00:12
+    Error: Processing ended: Fri May 31 15:46:05 2024
+    Error: Elapsed time: 00:00:12
+    Error: Total CPU time (on all processors): 00:00:13
 
 
