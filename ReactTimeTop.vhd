@@ -413,8 +413,3 @@ begin
     HEX7 <= s_Hex7;	 
 
 end Shell;
-
-
-=======
-
->>>>>>> e45e54f262b41691e2272d8b52bb09bcd2b70460
