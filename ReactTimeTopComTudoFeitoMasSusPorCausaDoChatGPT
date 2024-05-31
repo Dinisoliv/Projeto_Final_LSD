@@ -1,0 +1,170 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.all;
+use IEEE.NUMERIC_STD.all;
+
+entity ReactTimeTop is
+    port (
+        clk             : in std_logic;
+        reset           : in std_logic;
+        NRoundsInput    : in std_logic_vector(3 downto 0);
+        NRounds         : in std_logic_vector(3 downto 0); --Total rounds to be done in which game
+        PresentRounds   : in std_logic_vector(3 downto 0);
+        playerA         : in std_logic;
+        playerADeb      : in std_logic;
+        playerB         : in std_logic;
+        playerBDeb      : in std_logic;
+        stimulus        : in std_logic;
+        TotalTReactA    : in std_logic_vector(15 downto 0); -- check this dimension
+        TotalTReactB    : in std_logic_vector(15 downto 0);
+        timerScoreOut   : in std_logic;
+        timerConclsnOut : in std_logic;
+        timerDesqOut    : in std_logic;
+        blink10Hz       : in std_logic;
+        LEDRed          : out std_logic_vector(7 downto 0);
+        LEDGreen        : out std_logic_vector(15 downto 0);
+        Hex0, Hex1, Hex2: out std_logic_vector(6 downto 0);
+        Hex3, Hex4, Hex5: out std_logic_vector(6 downto 0);
+        Hex6, Hex7      : out std_logic_vector(6 downto 0)
+    );
+end ReactTimeTop;
+
+architecture Shell of ReactTimeTop is
+
+    signal enableNRounds     : std_logic;
+    signal loadRandom        : std_logic;
+    signal delayCounter      : std_logic;
+    signal TReactStartA      : std_logic;
+    signal TReactStartB      : std_logic;
+    signal Enable_SumTReactA : std_logic;
+    signal Enable_SumTReactB : std_logic;
+    signal CountRound        : std_logic;
+    signal timerScoreStart   : std_logic;
+    signal averageTReactA    : std_logic_vector(13 downto 0);
+    signal averageTReactB    : std_logic_vector(13 downto 0);
+    signal timerConclsnStart : std_logic;
+    signal timerDesqStart    : std_logic;
+
+    signal ovf               : std_logic;
+    signal clkOut            : std_logic;
+    signal dirtyIn           : std_logic;
+    signal pulsedOut         : std_logic;
+    signal don               : std_logic;
+    signal roundIn           : std_logic_vector(3 downto 0);
+    signal roundOut          : std_logic_vector(3 downto 0);
+    signal dataIn            : std_logic_vector(7 downto 0);
+    signal zero              : std_logic;
+
+begin
+    AccN : entity work.AccN(Behavorial)
+        generic map(N => 8)
+        port map(
+            clk => clk,
+            enable => enableNRounds,
+            reset => reset,
+            dataIn => NRoundsInput,
+            ovf => ovf,
+            dataOut => dataIn
+        );
+
+    Bin2BCD : entity work.Bin2N(Behavorial)
+        port map(
+            dataIn => dataIn,
+            tenthsOut => averageTReactA(3 downto 0),
+            hundredsOut => averageTReactA(7 downto 4),
+            thousandsOut => averageTReactA(11 downto 8)
+        );
+
+    Bin7SegDecoder : entity work.Bin7N(Behavorial)
+        port map(
+            enable => enableNRounds,
+            binInput => dataIn,
+            decOut_n => Hex0
+        );
+
+    ClkDivider : entity work.ClkN(Behavorial)
+        generic map(divFactor => 100000)
+        port map(
+            clkIn => clk,
+            clkOut => clkOut
+        );
+
+    Debouncer : entity work.DebN(Behavorial)
+        generic map(
+            kHzClkFreq => 50,
+            mSecMinInWidth => 20,
+            inPolarity => '1',
+            outPolarity => '1'
+        )
+        port map(
+            refClk => clk,
+            dirtyIn => playerA,
+            pulsedOut => playerADeb
+        );
+
+    FreeRun : entity work.FreeN(Behavorial)
+        port map(
+            clk => clk,
+            don => don
+        );
+
+    NRounds : entity work.NRoundsN(Behavorial)
+        port map(
+            clk => clk,
+            enable => enableNRounds,
+            roundIn => NRoundsInput,
+            roundOut => roundOut
+        );
+
+    RandomDownCounter : entity work.RanddomN(Behavorial)
+        port map(
+            clk => clk,
+            load => loadRandom,
+            down => delayCounter,
+            dataIn => dataIn,
+            zero => zero
+        );
+
+    FSM: entity work.ReactTimeFSM(Behavioral)
+        port map(
+            clk => clk,
+            reset => reset,
+            NRoundsInput => NRoundsInput,
+            NRounds => NRounds,
+            PresentRounds => PresentRounds,
+            playerA => playerA,
+            playerADeb => playerADeb,
+            playerB => playerB,
+            playerBDeb => playerBDeb,
+            stimulus => stimulus,
+            TotalTReactA => TotalTReactA,
+            TotalTReactB => TotalTReactB,
+            timerScoreOut => timerScoreOut,
+            timerConclsnOut => timerConclsnOut,
+            timerDesqOut => timerDesqOut,
+            blink10Hz => blink10Hz,
+            NroundsSave => roundIn,
+            enableNRounds => enableNRounds,
+            loadRandom => loadRandom,
+            delayCounter => delayCounter,
+            TReactStartA => TReactStartA,
+            TReactStartB => TReactStartB,
+            Enable_SumTReactA => Enable_SumTReactA,
+            Enable_SumTReactB => Enable_SumTReactB,
+            CountRound => CountRound,
+            timerScoreStart => timerScoreStart,
+            averageTReactA => averageTReactA,
+            averageTReactB => averageTReactB,
+            timerConclsnStart => timerConclsnStart,
+            timerDesqStart => timerDesqStart,
+            LEDRed => LEDRed,
+            LEDGreen => LEDGreen,
+            Hex0 => Hex0,
+            Hex1 => Hex1,
+            Hex2 => Hex2,
+            Hex3 => Hex3,
+            Hex4 => Hex4,
+            Hex5 => Hex5,
+            Hex6 => Hex6,
+            Hex7 => Hex7
+        );
+end Shell;
