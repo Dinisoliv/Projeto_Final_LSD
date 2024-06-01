@@ -3,7 +3,7 @@ use IEEE.STD_LOGIC_1164.all;
 use IEEE.NUMERIC_STD.all;
 
 library WORK;
-use.WORK.ReactTimePack.all;
+use WORK.ReactTimePack.all;
 
 entity ReactTimeTop is
 	port(CLOCK_50 : in std_logic;
@@ -29,38 +29,43 @@ architecture Shell of ReactTimeTop is
 	signal s_playerADeb, s_playerBDeb : std_logic;
 	signal s_enableNRounds : std_logic;
 	signal s_CountRound : std_logic;
+	signal s_NRound : std_logic_vector(3 downto 0);
+	signal s_don : std_logic_vector(11 downto 0);
 	
 	signal s_resetRoundCount : std_logic;
 	signal s_resetTReactSumA,s_resetTReactSumB : std_logic;
 	signal s_resetTReactCountA, s_resetTReactCountB : std_logic;
 	
-	signal s_presentRounds : std_logic;
+	signal s_presentRounds : std_logic_vector(3 downto 0);
 	signal s_loadRandom : std_logic;
 	signal s_delayCounter : std_logic;
 	signal s_stimulus : std_logic;
 	
 	signal s_TReactStartA, s_TReactStartB : std_logic;
-	signal s_TReactA, s_TReactB : std_logic;
+	signal s_TReactA, s_TReactB : std_logic_vector(10 downto 0);
 	signal s_Enable_SumTReactA, s_Enable_SumTReactB : std_logic;
-	signal s_TotalTReactA, s_TotalTReactB :std_logic;
+	signal s_TotalTReactA, s_TotalTReactB : std_logic_vector(14 downto 0);
+	signal s_maxTReactA, s_maxTReactB : std_logic;
 	
 	signal s_timerScoreStart, s_timerConclsnStart, s_timerDesqStart : std_logic;
+	signal s_timerScoreOut, s_timerConclsnOut, s_timerDesqOut : std_logic;	
 	
-	signal s_averageTReactA, s_averageTReactB : unsigned;
+	signal s_averageTReactA, s_averageTReactB : unsigned(15 downto 0);
 	signal s_winnerA, s_tie : std_logic;
-	signal s_DesqA, s_DesqB : std_logic
+	signal s_DesqA, s_DesqB : std_logic;
 	
+	signal s_blink10HZ : std_logic;
 	signal s_bin0, s_bin1, s_bin2, s_bin3 : std_logic_vector(3 downto 0);
 	signal s_bin4, s_bin5, s_bin6, s_bin7 : std_logic_vector(3 downto 0);
 	signal s_enableHexA, s_enableHexB : std_logic;
 	signal s_enableHyphen, s_charSelect, s_charEnable : std_logic;
-	signal s_Hex0, s_Hex1, s_Hex2, s_Hex3 : std_logic;
-	signal s_Hex4, s_Hex5, s_Hex6, s_Hex7 : std_logic;
+	signal s_Hex0, s_Hex1, s_Hex2, s_Hex3 : std_logic_vector(6 downto 0);
+	signal s_Hex4, s_Hex5, s_Hex6, s_Hex7 : std_logic_vector(6 downto 0);
 	
 
 begin
 
-	clk_1Kz : entity work.ClkN(Behavorial)
+	clk_1Kz : entity work.ClkDivider(Behavioral)
 		generic map(divFactor => 50000)
       port map(clkIn => CLOCK_50,
 					clkOut => s_clk1KHz);
@@ -69,8 +74,8 @@ begin
     generic map (
         kHzClkFreq     => 1, 
         mSecMinInWidth => 100,
-        inPolarity     => 0,
-        outPolarity    => 1
+        inPolarity     => '0',
+        outPolarity    => '1'
     )
     port map (
         refClk    => s_clk1KHz,
@@ -82,8 +87,8 @@ begin
     generic map (
         kHzClkFreq     => 1,
         mSecMinInWidth => 100, 
-        inPolarity     => 0, 
-        outPolarity    => 1
+        inPolarity     => '0', 
+        outPolarity    => '1'
     )
     port map (
         refClk    => s_clk1KHz, 
@@ -105,7 +110,7 @@ begin
         timerScoreOut     => s_timerScoreOut,
         timerConclsnOut   => s_timerConclsnOut,
         timerDesqOut      => s_timerDesqOut,
-        blink10Hz         =>  ,
+        blink10Hz         => s_blink10HZ,
         winnerA		     => s_winnerA,
         tie				     => s_tie, 
 		  
@@ -141,7 +146,7 @@ begin
         clk      => s_clk1KHz,
         enable   => s_enableNRounds,
         roundIn  => Sw(3 downto 0),
-        roundOut => s_NRound;
+        roundOut => s_NRound
     );
 
 	RoundCount : entity work.RoundCount(Behavioral)
@@ -154,7 +159,7 @@ begin
 	 
 	 FreeRun : entity work.FreeRun(Behavioral)
     port map (
-        clk => s_clk1KHz, --CLOCK_50 ou 1KHz
+        clk => s_clk1KHz,
         don => s_don
     );
 	 
@@ -168,62 +173,88 @@ begin
     );
 	 
 	 TReactCountA : entity work.TReact(Behavioral)
+	 generic map(
+		  N   => 11,
+		  Max => 2000
+	 )
     port map (
         clk    => s_clk1KHz,
         reset  => s_resetTReactCountA,
         up     => s_TReactStartA,
-        count  => s_TReactA
+        count  => s_TReactA,
+		  maxReached    => s_maxTReactA
     );
 
 	 TReactCountB : entity work.TReact(Behavioral)
-    port map (
+	 generic map(
+		  N   => 11,
+		  Max => 2000
+	 )    
+	 port map (
         clk    => s_clk1KHz,
         reset  => s_resetTReactCountB,
         up     => s_TReactStartB,
-        count  => s_TReactB
+        count  => s_TReactB,
+		  maxReached    => s_maxTReactB
     );
 	
-	
-	--Sums complete it 
-	--AAAAAAAAAAAAAAAAA
 	 SumTReactA : entity work.AccN(Behavioral)
     generic map (
-        N => 
+        OUtN => 15,
+		  InN  => 11
     )
     port map (
         clk     => s_clk1KHz,
         enable  => s_Enable_SumTReactA,
         reset   => s_resetTReactSumA,
         dataIn  => s_TReactA,
-        ovf     =>  ,
+        ovf     => open,
         dataOut => s_TotalTReactA
     );
 	 
 	 SumTReactB : entity work.AccN(Behavioral)
     generic map (
-        N => 
+        OUtN => 15,
+		  InN  => 11
     )
     port map (
         clk     => s_clk1KHz,
         enable  => s_Enable_SumTReactB,
         reset   => s_resetTReactSumB,
         dataIn  => s_TReactB,
-        ovf     =>  ,
+        ovf     => open,
         dataOut => s_TotalTReactB
     );
 	 
-	 --Calculo dos tempos medios
-	 --Adicionar desqualificação
-	 s_averageTReactA <= unsigned(s_TotalTReactA) / to_integer(unsigned(s_presentRounds));
-	 s_averageTReactB <= unsigned(s_TotalTReactB) / to_integer(unsigned(s_presentRounds));
-	 
-	 if s_averageTReactA < s_averageTReactB then	
-		s_winnerA <= '1';
-	 elsif s_averageTReactA > s_averageTReactB then
-		s_winnerA <= '0';
-	 else
-		s_tie <= '1';
-	 end if
+	 process(s_clk1KHz)
+	 begin
+		 if (rising_edge(s_clk1KHz)) then
+			 --Calculo dos tempos medios TReact
+			s_averageTReactA <= '0' & (unsigned(s_TotalTReactA) / to_integer(unsigned(s_presentRounds)));
+			s_averageTReactB <= '0' & (unsigned(s_TotalTReactB) / to_integer(unsigned(s_presentRounds)));
+			 
+			if ((s_DesqA = '1') and (s_DesqB = '0')) then
+				 s_winnerA <= '0'; -- Team A is disqualified, so Team B wins
+				 s_tie <= '0';
+			elsif ((s_DesqA = '0') and (s_DesqB = '1')) then
+				 s_winnerA <= '1'; -- Team B is disqualified, so Team A wins
+				 s_tie <= '0';
+			elsif ((s_DesqA = '1') and (s_DesqB = '1')) then
+				 s_winnerA <= '0';
+				 s_tie <= '0';
+			else -- Both teams are not disqualified, compare average reaction times
+				 if (s_averageTReactA < s_averageTReactB) then
+					  s_winnerA <= '1';
+					  s_tie <= '0';
+				 elsif (s_averageTReactA > s_averageTReactB) then
+					  s_winnerA <= '0';
+					  s_tie <= '0';
+				 else
+					  s_tie <= '1'; -- It's a tie
+				 end if;
+			end if;
+		end if;
+	end process;
 	 
 	 TimerN_Scores : entity work.TimerN(Behavioral)
     generic map (
@@ -262,20 +293,19 @@ begin
         timerOut => s_timerDesqOut
     );
 	 
-	 --BLINKKKKK (CLOCK50???)
 	 blink_gen_10Hz : entity work.blink_gen(Behavioral)
     generic map (
-        NUMBER_STEPS => 5000000
+        NUMBER_STEPS => 100
     )
     port map (
-        clk   => ,
-        reset => ,
-        blink => 
+        clk   => s_clk1KHz,
+        reset => '0',
+        blink => s_blink10HZ
     );
 	 
 	 Bin2BCD_A : entity work.Bin2BCD(Behavioral)
     port map (
-        dataIn       => s_averageTReactA,
+        dataIn       => std_logic_vector(s_averageTReactA),
         unitsOut     => s_bin4,
         tenthsOut    => s_bin5,
         hundredsOut  => s_bin6,
@@ -284,7 +314,7 @@ begin
 	 
 	 Bin2BCD_B : entity work.Bin2BCD(Behavioral)
     port map (
-        dataIn       => s_averageTReactB,
+        dataIn       => std_logic_vector(s_averageTReactB),
         unitsOut     => s_bin0,
         tenthsOut    => s_bin1,
         hundredsOut  => s_bin2,

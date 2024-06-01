@@ -1,13 +1,10 @@
-Duvidas:
+doubt:
 Listas sensibilidade
 Test? doesnt count to avgtime(1st round)?
-s_winner and s_tie
 if, elsif , else
-blink - 2 ... relogio - freq
-
-Por fazer:
-FSM (saidas dos displays e LEDS)
-Top Level - todo
+Bin2BCD
+max TReact
+latches
 
 ext:
 NRound decimal in CONF
@@ -16,12 +13,6 @@ Tempo de reacao da ronda
 winner ronda
 CONF - efeitos
 
-Mostrar displays/Leds:
-averageTReact
-NRound Presente
-Verdes (apagar lateral (pronto) - acender lateral (DESQ) - todo (estimulo)
-Vermelho (Rondas restantes)
-
-Se possivel:
+Nah:
 Separar processos FSM - saidas e next State
 Sparated file for instaciacao

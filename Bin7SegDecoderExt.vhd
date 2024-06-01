@@ -2,7 +2,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 
 library WORK;
-use.WORK.ReactTimePack.all;
+use WORK.ReactTimePack.all;
 
 entity Bin7SegDecoderExt is
 	generic(charPat0 : std_logic_vector(6 downto 0) := "1111111";
@@ -34,9 +34,9 @@ begin
 		
 		else
 			case binInput is
-			when "0001" =>
+			 when "0001" =>
 				decOut_n <= "1111001"; -- 1
-			when "0010" =>
+			 when "0010" =>
 				  decOut_n <= "0100100"; -- 2
 			 when "0011" =>
 				  decOut_n <= "0110000"; -- 3
@@ -66,7 +66,8 @@ begin
 				  decOut_n <= "0001110"; -- F
 			 when others =>
 				  decOut_n <= "1000000"; -- 0
-		end case;
+			end case;
+		end if;
 	end process;
 
 	decOut_n <= s_decOut_n when (enable = '1') else

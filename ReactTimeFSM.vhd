@@ -44,12 +44,11 @@ entity ReactTimeFSM is
 		  charSelect        : out std_logic;
 		  enableHyphen      : out std_logic;
 		  enableHexA        : out std_logic;
-		  enableHexB        : out std_logic;
-		  );
+		  enableHexB        : out std_logic);
 end ReactTimeFSM;
 
 architecture Behavioral of ReactTimeFSM is
-	type state is (INIT, CONF, PREP, READY_A, READY_B, DELAY, STIM, REACT_A, REACT_B, INTER, SCORES, DESQA, DESQB, CONCLSN);
+	type state is (INIT, CONF, PREP, READY_A, READY_B, DELAY, STIM, REACT_A, REACT_B, INTER, SCORES, DESQUA_A, DESQUA_B, CONCLSN);
 	signal PS, NS : state;
 	
 	signal s_RoundsMissing  : integer;
@@ -94,11 +93,12 @@ begin
 		NroundsSave 		<= "0000";
 		
 		s_RoundsMissing <= to_integer(unsigned(NRounds)) - to_integer(unsigned(PresentRounds));
-		LEDRed(s_RoundsMissing downto 0) <= (others => '1'); 
-		LEDRed(15 downto s_RoundsMissing) <= (others => '0'); 
-		
-		LEDGreen <= (others => '0');
-
+		if s_RoundsMissing >= 0 and s_RoundsMissing <= 16 then
+			LEDRed(s_RoundsMissing downto 0) <= (others => '1'); 
+			LEDRed(15 downto s_RoundsMissing + 1) <= (others => '0'); 
+		else
+			 LEDRed <= (others => '0'); 
+		end if; 
 		
 		case PS is
 			when INIT =>
@@ -167,12 +167,12 @@ begin
 				end if;
 				
 				if (playerA = '1') then
-					NS <= DESQA;
+					NS <= DESQUA_A;
 				elsif (playerB = '1') then
-					NS <= DESQB;
+					NS <= DESQUA_B;
 				end if;
 				
-			when DESQA =>
+			when DESQUA_A =>
 				delayCounter <= '1';
 			
 				if (playerB = '1') then
@@ -188,7 +188,7 @@ begin
 					end if;
 				end if;
 				
-			when DESQB =>
+			when DESQUA_B =>
 				delayCounter <= '1';
 
 				if (playerA = '1') then
@@ -259,18 +259,18 @@ begin
 				timerConclsnStart <= '1';
 				
 				if tie = '1' then
-					enableHyphen = '1';
+					enableHyphen <= '1';
 						if blink10Hz = '1' then
-							enableHexA = '0';
-							enableHexB = '0';
+							enableHexA <= '0';
+							enableHexB <= '0';
 						end if;
 				elsif winnerA = '1' then
 					if blink10Hz = '1' then
-						enableHexA = '0';
+						enableHexA <= '0';
 					end if;
-				elsif s_winnerA = '0' then
+				elsif winnerA = '0' then
 					if blink10Hz = '1' then
-						enableHexB = '0';						
+						enableHexB <= '0';						
 					end if;
 				end if;
 					
