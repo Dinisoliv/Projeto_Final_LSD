@@ -24,5 +24,5 @@ begin
         end if;
     end process;
 
-    zero <= '1' when s_count = 0 else '0';  
+    zero <= '1' when (s_count = 0) else '0';  
 end Behavioral;

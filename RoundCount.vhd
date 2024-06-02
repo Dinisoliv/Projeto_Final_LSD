@@ -6,11 +6,11 @@ entity RoundCount is
 	port(clk    : in std_logic;
 		  reset  : in std_logic;
 		  up     : in std_logic;
-		  count  : out std_logic_vector(3 downto 0));
+		  count  : out std_logic_vector(4 downto 0));
 end RoundCount;
 
 architecture Behavioral of RoundCount is
-	signal s_count : unsigned(3 downto 0);
+	signal s_count : unsigned(4 downto 0) := "00000";
 begin
 	process(clk)
 	begin
@@ -22,5 +22,5 @@ begin
 			end if;
 		end if;
 	end process;
-count <= std_logic_vector(s_count);
+	count <= std_logic_vector(s_count);
 end Behavioral;

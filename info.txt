@@ -1,17 +1,11 @@
-doubt:
-Listas sensibilidade
-Test? doesnt count to avgtime(1st round)?
-if, elsif , else
-Bin2BCD
-max TReact
-latches
+testbench
+relatorio
+ppt
+deal with desq
+test - dsnt count
 
 ext:
 NRound decimal in CONF
-ronda atual LEDR - blink
-Tempo de reacao da ronda
-winner ronda
-CONF - efeitos
 
 Nah:
 Separar processos FSM - saidas e next State

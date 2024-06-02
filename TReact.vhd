@@ -13,8 +13,8 @@ entity TReact is
 end TReact;
 
 architecture Behavioral of TReact is
+
    signal s_count : unsigned(N-1 downto 0);
-	signal s_max_reached : std_logic;
 
 begin
     process(clk)
@@ -22,19 +22,17 @@ begin
         if rising_edge(clk) then
             if (reset = '1') then
                 s_count <= (others => '0');
-					 s_max_reached <= '0';
+					 maxReached <= '0';
             elsif (up = '1') then
-                s_count <= s_count + 1;
-					 if s_count < Max then
+					if s_count < Max then
 						s_count <= s_count + 1;
-						s_max_reached <= '0';
-                else
-                  s_max_reached <= '1';
-					 end if;
+						maxReached <= '0';
+               else
+                  maxReached <= '1';
+					end if;
             end if;
         end if;
     end process;
 
     count <= std_logic_vector(s_count);
-	 maxReached   <= s_max_reached; 
 end Behavioral;

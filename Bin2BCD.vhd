@@ -13,23 +13,24 @@ end Bin2BCD;
 architecture Behavioral of Bin2BCD is
 
 	signal s_dataIn      : unsigned(15 downto 0); 
-	signal s_unitsOut    : unsigned(3 downto 0);
-	signal s_hundTen     : unsigned(15 downto 0); 
-	signal s_tenthsOut   : unsigned(3 downto 0);
-	signal s_hundredsOut : unsigned(3 downto 0);
-	signal s_thousandsOut: unsigned(3 downto 0); 
+	signal s_unitsOut    : unsigned(15 downto 0);
+	signal s_tenthsinter : unsigned(15 downto 0);
+	signal s_thousHund   : unsigned(15 downto 0);
+	signal s_tenthsOut   : unsigned(15 downto 0);
+	signal s_hundredsOut : unsigned(15 downto 0);
+	signal s_thousandsOut: unsigned(15 downto 0); 
 
 begin
-	s_dataIn      <= unsigned(dataIn);
-	s_unitsOut    <= s_dataIn mod 10;
-	s_hundTen     <= s_dataIn / 10;
-	s_tenthsOut   <= s_hundTen mod 10;
-	s_hundTen     <= s_hundTen / 10;
-	s_hundredsOut <= s_hundTen mod 10;
-	s_thousandsOut <= s_hundTen / 10;
+	s_dataIn       <= unsigned(dataIn);
+	s_unitsOut     <= s_dataIn rem 10;
+	s_tenthsinter  <= s_dataIn / 10;
+	s_tenthsOut    <= s_tenthsinter rem 10;
+	s_thousHund    <= s_tenthsinter / 10;
+	s_hundredsOut  <= s_thousHund rem 10;
+	s_thousandsOut <= s_thousHund / 10;
 
-	unitsOut    <= std_logic_vector(s_unitsOut);
-	tenthsOut   <= std_logic_vector(s_tenthsOut);
-	hundredsOut <= std_logic_vector(s_hundredsOut);
-	thousandsOut <= std_logic_vector(s_thousandsOut);
+	unitsOut    <= std_logic_vector(s_unitsOut(3 downto 0));
+	tenthsOut   <= std_logic_vector(s_tenthsOut(3 downto 0));
+	hundredsOut <= std_logic_vector(s_hundredsOut(3 downto 0));
+	thousandsOut <= std_logic_vector(s_thousandsOut(3 downto 0));
 end Behavioral;

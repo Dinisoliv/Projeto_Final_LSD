@@ -23,6 +23,6 @@ begin
 	end if;
 end process;
 
-blink <= '1' when s_counter >= (NUMBER_STEPS/2) else '0';
+blink <= '1' when (s_counter >= (NUMBER_STEPS/2)) else '0';
 
 end Behavioral;

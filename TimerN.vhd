@@ -28,14 +28,15 @@ begin
 				if (s_counter = 0) then
 					if (start = '1') then
 						s_counter  <= s_counter + 1;
-						timerOut <= '0';	
 					end if;
+					timerOut <= '0';	
 					
 				elsif (s_counter = N-1) then
 					s_counter <= 0;
 					timerOut <= '1';
 				else
 					s_counter <= s_counter + 1;
+					timerOut <= '0';
 				end if;
 			end if;
 		end if;
